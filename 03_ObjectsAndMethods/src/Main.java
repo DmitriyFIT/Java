@@ -13,5 +13,15 @@ public class Main {
         arithmetic.findMaxNumber();
         arithmetic.findMinNumber();
         arithmetic.print();
+
+        Printer printerHP = new Printer();
+        printerHP.add("My First Work");
+        printerHP.add("Me Second Work", "Test Prinring");
+        printerHP.add("I want Study", "Study ", 6);
+        printerHP.print();
+        printerHP.add("TEST", "Test1", 8);
+        printerHP.add("TEST1", "Test1");
+        printerHP.add("TEST2");
+        printerHP.print();
     }
 }
