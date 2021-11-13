@@ -5,7 +5,6 @@ public class Basket {
     private int totalPrice = 0;
     private int limit;
     private double totalWeight = 0;
-    private double weight = 0;
 
     public Basket() {
         increaseCount(1);
@@ -22,7 +21,6 @@ public class Basket {
         this();
         this.items = this.items + items;
         this.totalPrice = totalPrice;
-        this.weight = weight;
     }
 
     public static int getCount() {
@@ -55,7 +53,7 @@ public class Basket {
         items = items + "\n" + name + " - " +
                 count + " шт. - " + price + " - " + weight * count + " гр.";
         totalPrice = totalPrice + count * price;
-        totalWeight = totalWeight + count * weight;
+        totalWeight += count * weight;
     }
 
     public void clear() {
