@@ -2,15 +2,15 @@ package ru.skillbox;
 
 public class Cargo {
 
-    private final int resault;
+    Dimensions dimensions;
     private final int weight;
     private final String deliveryAddress;
     private final boolean turnOver;
     private final String registrationNumber;
     private final boolean fragile;
 
-    public Cargo(int resault, int weight, String deliveryAddress, boolean turnOver, String registrationNumber, boolean fragile) {
-        this.resault = resault;
+    public Cargo(Dimensions dimensions, int weight, String deliveryAddress, boolean turnOver, String registrationNumber, boolean fragile) {
+        this.dimensions = dimensions;
         this.weight = weight;
         this.deliveryAddress = deliveryAddress;
         this.turnOver = turnOver;
@@ -19,15 +19,17 @@ public class Cargo {
     }
 
     public Cargo setWeight(int weight) {
-        return new Cargo(resault, weight, deliveryAddress, turnOver, registrationNumber, fragile);
+        return new Cargo(dimensions, weight, deliveryAddress, turnOver, registrationNumber, fragile);
     }
 
     public Cargo setDeliveryAddress(String deliveryAddress) {
-        return new Cargo(resault, weight, deliveryAddress, turnOver, registrationNumber, fragile);
+        return new Cargo(dimensions, weight, deliveryAddress, turnOver, registrationNumber, fragile);
     }
 
-    public Cargo setDimensions(int resault){
-        return new Cargo(resault, weight, deliveryAddress, turnOver, registrationNumber, fragile);
+    public Cargo setDimensions(Dimensions dimensions){
+        return new Cargo(dimensions.setDimensions(dimensions.getWidth(), dimensions.getHeight(),dimensions.getLengh()),
+                weight, deliveryAddress, turnOver, registrationNumber, fragile
+        );
     }
 
     public int getWeight() {
@@ -51,7 +53,7 @@ public class Cargo {
     }
 
     public void print() {
-        System.out.println(resault + " " + getWeight() + " " + getDeliveryAddress() + " " +
+        System.out.println(dimensions.getDimensions() + " " + getWeight() + " " + getDeliveryAddress() + " " +
                             isTurnOver() + " " + getRegistrationNumber() + " " + isFragile());
     }
 }
