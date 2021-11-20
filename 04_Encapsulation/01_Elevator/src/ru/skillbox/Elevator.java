@@ -16,13 +16,24 @@ public class Elevator {
     }
 
     public void moveDown(){
-        curentFloor -= 1;
-        System.out.println(getCurentFloor());
+        if(curentFloor <= -3) {
+            System.out.println("Вы находитесь на последнем этаже! Ниже спуститься нельзя!");
+        }
+        else {
+            curentFloor -= 1;
+            System.out.println(getCurentFloor());
+        }
     }
 
     public void moveUp(){
-        curentFloor += 1;
-        System.out.println(getCurentFloor());
+        if (curentFloor >= 26) {
+            System.out.println("Вы находитесь на последнем этаже! Выше подняться нельзя!");
+        }
+        else {
+
+            curentFloor += 1;
+            System.out.println(getCurentFloor());
+        }
     }
 
     public void move(int floor){
