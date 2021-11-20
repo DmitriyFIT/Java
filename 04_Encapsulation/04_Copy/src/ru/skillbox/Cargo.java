@@ -2,7 +2,7 @@ package ru.skillbox;
 
 public class Cargo {
 
-    Dimensions dimensions;
+    private final Dimensions dimensions;
     private final int weight;
     private final String deliveryAddress;
     private final boolean turnOver;
