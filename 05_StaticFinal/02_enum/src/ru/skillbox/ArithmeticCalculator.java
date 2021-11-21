@@ -11,23 +11,24 @@ public class ArithmeticCalculator {
     }
 
     public void calculate(Operation type) {
-        if (type == Operation.ADD) {
-            System.out.println("Сумма числел " + firstNimber +
+        switch (type) {
+            case ADD:
+                System.out.println("Сумма числел " + firstNimber +
                     " и " + secondNumber + " равна: " +
                     (firstNimber + secondNumber)
-            );
-        }
-        else if (type == Operation.SUBTRACT) {
-            System.out.println("Разность числел " + firstNimber +
+                );
+            break;
+            case SUBTRACT:
+                System.out.println("Разность числел " + firstNimber +
                     " и " + secondNumber + " равна: " +
                     (firstNimber - secondNumber)
-            );
-        }
-        else if (type == Operation.MULTIPLY) {
-            System.out.println("Произведение числел " + firstNimber +
+                );
+            break;
+            case MULTIPLY:
+                System.out.println("Произведение числел " + firstNimber +
                     " и " + secondNumber + " равно: " +
                     (firstNimber * secondNumber)
-            );
+                );
         }
     }
 }
