@@ -1,6 +1,6 @@
 public class Keyboard {
 
-    TypeKeyboard typeKeyboard;
+    private final TypeKeyboard typeKeyboard;
     private final boolean backlight;
     private final int weight;
 
@@ -20,5 +20,11 @@ public class Keyboard {
 
     public TypeKeyboard getTypeKeyboard() {
         return typeKeyboard;
+    }
+
+    public String toString() {
+        return "\tKeyboard: Type - " + typeKeyboard +
+                ", Backlight - " + backlight +
+                ", Weight - " + weight;
     }
 }

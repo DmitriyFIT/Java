@@ -1,6 +1,6 @@
 public class Monitor {
 
-    TypeMonitor typeMonitor;
+    private final TypeMonitor typeMonitor;
     private final int sizeScreen;
     private final int weight;
 
@@ -20,6 +20,12 @@ public class Monitor {
 
     public TypeMonitor getTypeMonitor() {
         return typeMonitor;
+    }
+
+    public String toString() {
+        return "\tMonitor: Type - " + typeMonitor +
+                ", Size screen - " + sizeScreen +
+                ", Weight - " + weight;
     }
 }
 

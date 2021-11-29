@@ -1,11 +1,11 @@
-public class CPU {
+public class Cpu {
 
     private final int freqency;
     private final int numberCores;
     private final String manufactures;
     private final int wight;
 
-    public CPU(int freqency, int numberCores, String manufactures, int wight) {
+    public Cpu(int freqency, int numberCores, String manufactures, int wight) {
         this.freqency = freqency;
         this.numberCores = numberCores;
         this.manufactures = manufactures;
@@ -26,5 +26,12 @@ public class CPU {
 
     public int getWight() {
         return wight;
+    }
+
+    public String toString() {
+        return "\tCPU: Freqency - " + freqency +
+                ", Number Cores - " + numberCores +
+                ", Manufactures - " + manufactures +
+                ", Weight: " + wight + ";";
     }
 }

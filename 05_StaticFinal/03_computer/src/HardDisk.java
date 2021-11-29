@@ -1,6 +1,6 @@
 public class HardDisk {
 
-    TypeHardDisk typeHardDisk;
+    private final TypeHardDisk typeHardDisk;
     private final int volume;
     private final int weight;
 
@@ -20,5 +20,11 @@ public class HardDisk {
 
     public TypeHardDisk getTypeHardDisk() {
         return typeHardDisk;
+    }
+
+    public String toString() {
+        return "\tHard disk: Type - " + typeHardDisk +
+                ", Volume - " + volume +
+                ", Weight - " + weight;
     }
 }
