@@ -8,6 +8,7 @@ public class Main {
         Keyboard keyboard = new Keyboard(TypeKeyboard.BLUETOOTH, false, 10);
 
         Computer comp1 = new Computer("LG", "Big", cpu, ram, hardDisk, monitor, keyboard);
+        System.out.println(comp1);
 
         Cpu cpu1 = new Cpu(2500, 8, "Athlon", 190);
         Ram ram1 = new Ram(TypeRam.DDR4, 4096, 200);
@@ -15,9 +16,10 @@ public class Main {
         Monitor monitor1 = new Monitor(TypeMonitor.IPS, 28, 200);
         Keyboard keyboard1 = new Keyboard(TypeKeyboard.NOBLUETOOTH, true, 200);
 
-        Computer comp2 = comp1.setParametrs("Siemens", "Fast", cpu1, ram1, hardDisk1, monitor1, keyboard1);
-
+        comp1.setCpu(cpu1);
         System.out.println(comp1);
-        System.out.println(comp2);
+        comp1.setRam(ram1);
+        comp1.setHardDisk(hardDisk1);
+        System.out.println(comp1);
     }
 }

@@ -1,3 +1,5 @@
+import java.text.spi.CollatorProvider;
+
 public class Computer {
 
     private final String vendor;
@@ -19,13 +21,27 @@ public class Computer {
         this.keyboard = keyboard;
     }
 
-    public Computer setParametrs(String vendor, String name, Cpu cpu, Ram ram, HardDisk hardDisk, Monitor monitor, Keyboard keyboard) {
-        return new Computer(vendor, name, cpu, ram, hardDisk, monitor, keyboard);
+    public void setCpu(Cpu cpu) {
+        this.cpu = cpu;
     }
 
-    public Cpu getCpu() {
-        return cpu;
+    public void setRam(Ram ram) {
+        this.ram = ram;
     }
+
+    public void setHardDisk(HardDisk hardDisk) {
+        this.hardDisk = hardDisk;
+    }
+
+    public void setMonitor(Monitor monitor) {
+        this.monitor = monitor;
+    }
+
+    public void setKeyboard(Keyboard keyboard) {
+        this.keyboard = keyboard;
+    }
+
+    public Cpu getCpu() { return cpu; }
 
     public Ram getRam() {
         return ram;
