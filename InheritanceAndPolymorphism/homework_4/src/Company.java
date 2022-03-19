@@ -8,7 +8,6 @@ public class Company {
 
     public Company() {
         employeeList = new ArrayList<>();
-        getIncomeCompany();
     }
 
     public int getIncomeCompany() {
@@ -16,21 +15,14 @@ public class Company {
     }
 
     public void hire(Employee employee) {
+        employee.getMonthSalary();
         employeeList.add(employee);
     }
 
     public void hireAll(Employee employee, int count) {
         for (int i = 0; i < count; i++) {
-            if (employee.getClass().equals(Manager.class)) {
-                Employee employeeM = new Manager();
-                employeeList.add(employeeM);
-            } else if (employee.getClass().equals(Operator.class)) {
-                Employee employeeOP = new Operator();
-                employeeList.add(employeeOP);
-            } else {
-                Employee employeeTM = new TopManager();
-                employeeList.add(employeeTM);
-            }
+            employee.getMonthSalary();
+            employeeList.add(employee);
         }
     }
 
@@ -41,11 +33,10 @@ public class Company {
         }
     }
 
-    public void enter(int count) {
+    public void printListEmployee(int count) {
         for (int i = 0; i < count; i++) {
             System.out.println(employeeList.get(i));
         }
-        System.out.println(employeeList.size());
     }
 
     public ArrayList<Employee> getTopSalaryStaff(int count) {
@@ -55,11 +46,29 @@ public class Company {
                 return Integer.compare(o1.getMonthSalary(), o2.getMonthSalary());
             }
         });
-        enter(count);
-        return employeeList;
+
+        if (count > 0 && count <= employeeList.size()) {
+            printListEmployee(count);
+            return employeeList;
+        }
+        else {
+            return null;
+        }
     }
 
     public ArrayList<Employee> getLowestSalaryStaff(int count) {
-        return null;
+        Collections.sort(employeeList, new Comparator<Employee>() {
+            @Override
+            public int compare(Employee o1, Employee o2) {
+                return Integer.compare((o2.getMonthSalary()), o1.getMonthSalary());
+            }
+        });
+        if (count > 0 && count <= employeeList.size()) {
+            printListEmployee(count);
+            return employeeList;
+        }
+        else {
+            return null;
+        }
     }
 }

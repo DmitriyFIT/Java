@@ -7,10 +7,12 @@ public class Main {
         Company company = new Company();
         Company company1 = new Company();
 
-       // company.hireAll(employeeTM, 10);
-       // company.hireAll(employeeOP, 180);
-        company.hireAll(employeeM, 80);
-
-        company.getTopSalaryStaff(15);
+        company.hireAll(employeeTM, 10);
+        company1.hireAll(employeeM, 10);
+        //company.hireAll(employeeOP, 180);
+        //company.hireAll(employeeM, 80);
+        company.getLowestSalaryStaff(10);
+        System.out.println("-------------------------------------------------");
+        company1.getTopSalaryStaff(10);
     }
 }

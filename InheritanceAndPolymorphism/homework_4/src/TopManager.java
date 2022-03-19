@@ -5,10 +5,6 @@ public class TopManager implements Employee{
     private int salary;
     Company companyInCome = new Company();
 
-    public TopManager() {
-        getMonthSalary();
-    }
-
     @Override
     public int getMonthSalary() {
         if (companyInCome.getIncomeCompany() > 10_000_000) {

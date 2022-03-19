@@ -5,10 +5,6 @@ public class Manager implements Employee{
     protected int salary = 0;
     protected double bonusPart = 0;
 
-    public Manager() {
-        getMonthSalary();
-    }
-
     @Override
     public int getMonthSalary() {
         bonusPart =  (115_000 + (25_000 * Math.random())) * BONUS;
