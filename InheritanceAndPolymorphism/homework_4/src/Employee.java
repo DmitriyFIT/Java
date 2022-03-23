@@ -1,5 +1,9 @@
-public interface Employee {
+public interface Employee extends Comparable<Employee>{
 
     int getMonthSalary();
-    String getInfoSalary();
+
+    @Override
+    default int compareTo(Employee o) {
+        return Integer.compare(getMonthSalary(), o.getMonthSalary());
+    }
 }
