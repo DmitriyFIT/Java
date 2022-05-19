@@ -2,80 +2,103 @@ import core.Line;
 import core.Station;
 import junit.framework.TestCase;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class RouteCalculatorTest extends TestCase {
-    List <Station> route1;
-    StationIndex stationIndex;
-    RouteCalculator routeCalculator;
+
+    List <Station> route = new ArrayList<>();
+    List <Station> routeOnTheLine = new ArrayList<>();
+    List <Station> routeWithOneConnection = new ArrayList<>();
+    List <Station> routeWithTwoConnections = new ArrayList<>();
+    StationIndex stationIndex = new StationIndex();
+    RouteCalculator routeCalculator = new RouteCalculator(stationIndex);
 
     @Override
     protected void setUp() throws Exception {
-        route1 = new ArrayList<>();
-        stationIndex = new StationIndex();
-
         Line line1 = new Line(1, "First");
         Line line2 = new Line(2, "Second");
         Line line3 = new Line(3, "Third");
+
+        Station station11 = new Station("11", line1);
+        Station station12 = new Station("12", line1);
+        Station station13 = new Station("13", line1);
+        Station station21 = new Station("21", line2);
+        Station station22 = new Station("22", line2);
+        Station station23 = new Station("23", line2);
+        Station station31 = new Station("31", line3);
+        Station station32 = new Station("32", line3);
+        Station station33 = new Station("33", line3);
+
+        line1.addStation(station11);
+        line1.addStation(station12);
+        line1.addStation(station13);
+        line2.addStation(station21);
+        line2.addStation(station22);
+        line2.addStation(station23);
+        line3.addStation(station31);
+        line3.addStation(station32);
+        line3.addStation(station33);
+
+        stationIndex.addStation(station11);
+        stationIndex.addStation(station12);
+        stationIndex.addStation(station13);
+        stationIndex.addStation(station21);
+        stationIndex.addStation(station22);
+        stationIndex.addStation(station23);
+        stationIndex.addStation(station31);
+        stationIndex.addStation(station32);
+        stationIndex.addStation(station33);
 
         stationIndex.addLine(line1);
         stationIndex.addLine(line2);
         stationIndex.addLine(line3);
 
-        Station s1l1 = new Station("st 1-1", line1);
-        Station s2l1 = new Station("st 2-1", line1);
-        Station s3l1 = new Station("st 3-1", line1);
+        List<Station> connection1to2 = new ArrayList<>();
+        connection1to2.add(station12);
+        connection1to2.add(station22);
 
-        line1.addStation(s1l1);
-        line1.addStation(s2l1);
-        line1.addStation(s3l1);
-
-        Station s1l2 = new Station("st 1-2", line2);
-        Station s2l2 = new Station("st 2-2", line2);
-        Station s3l2 = new Station("st 3-2", line2);
-
-        line2.addStation(s1l2);
-        line2.addStation(s2l2);
-        line2.addStation(s3l2);
-
-        Station s1l3 = new Station("st 1-3", line3);
-        Station s2l3 = new Station("st 1-3", line3);
-        Station s3l3 = new Station("st 1-3", line3);
-
-        line3.addStation(s1l3);
-        line3.addStation(s2l3);
-        line3.addStation(s3l3);
-
-        stationIndex.addStation(s1l1);
-        stationIndex.addStation(s2l1);
-        stationIndex.addStation(s3l1);
-        stationIndex.addStation(s1l2);
-        stationIndex.addStation(s2l2);
-        stationIndex.addStation(s3l2);
-        stationIndex.addStation(s1l3);
-        stationIndex.addStation(s2l3);
-        stationIndex.addStation(s3l3);
-
-        List<Station> conection1to2 = new ArrayList<>();
-        conection1to2.add(s2l1);
-        conection1to2.add(s2l2);
         List<Station> connection2to3 = new ArrayList<>();
-        connection2to3.add(s2l2);
-        connection2to3.add(s3l3);
+        connection2to3.add(station21);
+        connection2to3.add(station31);
 
-        route1.add(s1l1);
-        route1.add(s2l1);
-        route1.add(s3l1);
-        route1.add(s2l2);
-        route1.add(s1l2);
-        route1.add(s3l3);
+        stationIndex.addConnection(connection1to2);
+        stationIndex.addConnection(connection2to3);
+
+        routeOnTheLine.add(station11);
+        routeOnTheLine.add(station12);
+        routeOnTheLine.add(station13);
+
+        routeWithOneConnection.add(station11);
+        routeWithOneConnection.add(station12);
+        routeWithOneConnection.add(station22);
+        routeWithOneConnection.add(station23);
+
+        routeWithTwoConnections.add(station11);
+        routeWithTwoConnections.add(station12);
+        routeWithTwoConnections.add(station22);
+        routeWithTwoConnections.add(station21);
+        routeWithTwoConnections.add(station31);
+        routeWithTwoConnections.add(station32);
     }
 
     @Test
-    public void testCalculateDuration() {
-        double actual = RouteCalculator.calculateDuration(route1);
+    public void testCalculateDurationOnTheLine() {
+        double actual = RouteCalculator.calculateDuration(routeOnTheLine);
+        double expected = 5.0;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testCalculateDurationWithOneConnection() {
+        double actual = RouteCalculator.calculateDuration(routeWithOneConnection);
+        double expected = 8.5;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testCalculateDurationWithOTwoConnection() {
+        double actual = RouteCalculator.calculateDuration(routeWithTwoConnections);
         double expected = 14.5;
         assertEquals(expected, actual);
     }
@@ -83,9 +106,28 @@ public class RouteCalculatorTest extends TestCase {
     @Test
     public void testGetRouteOnTheLine() {
         List<Station> actual = routeCalculator.getShortestRoute(
-                stationIndex.getStation("st 1-1"),
-                stationIndex.getStation("st 1-3"));
-        assertEquals(3, actual.size());
+                stationIndex.getStation("11"),
+                stationIndex.getStation("13"));
+        List<Station> expected = route.subList(0, 3);
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void testGetRouteWithOneConnection() {
+        List<Station> actual = routeCalculator.getShortestRoute(
+                stationIndex.getStation("11"),
+                stationIndex.getStation("23"));
+        List<Station> expected = routeWithOneConnection;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGetRouteWithTwoConnection() {
+        List<Station> actual = routeCalculator.getShortestRoute(
+                stationIndex.getStation("11"),
+                stationIndex.getStation("32"));
+        List<Station> expected = routeWithTwoConnections;
+        assertEquals(expected, actual);
     }
 
     @Override
