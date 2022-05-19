@@ -77,6 +77,7 @@ public class RouteCalculator {
 
     private List<Station> getRouteWithOneConnection(Station from, Station to) {
         if (from.getLine().equals(to.getLine())) {
+
             return null;
         }
 
