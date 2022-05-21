@@ -108,7 +108,7 @@ public class RouteCalculatorTest extends TestCase {
         List<Station> actual = routeCalculator.getShortestRoute(
                 stationIndex.getStation("11"),
                 stationIndex.getStation("13"));
-        List<Station> expected = route.subList(0, 3);
+        List<Station> expected = routeOnTheLine;
         assertEquals(expected,actual);
     }
 

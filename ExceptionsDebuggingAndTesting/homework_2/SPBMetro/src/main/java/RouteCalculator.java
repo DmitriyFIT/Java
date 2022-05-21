@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import static java.lang.Math.abs;
+
 public class RouteCalculator {
     private final StationIndex stationIndex;
 
@@ -76,11 +78,17 @@ public class RouteCalculator {
     }
 
     private List<Station> getRouteWithOneConnection(Station from, Station to) {
-        if (from.getLine().equals(to.getLine())) {
+        if (from.getLine().getNumber() != to.getLine().getNumber()) {
+            if (abs (from.getLine().getNumber() - to.getLine().getNumber()) > 1) {
+                return null;
+            }
+        }
+
+ /*       if (from.getLine().getNumber() != to.getLine().getNumber()) {
 
             return null;
         }
-
+*/
         List<Station> route = new ArrayList<>();
 
         List<Station> fromLineStations = from.getLine().getStations();
