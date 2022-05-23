@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouteCalculatorTest extends TestCase {
+public class GetShortestRouteTest extends TestCase {
 
     List <Station> routeOnTheLine = new ArrayList<>();
     List <Station> routeWithOneConnection = new ArrayList<>();
@@ -82,23 +82,29 @@ public class RouteCalculatorTest extends TestCase {
     }
 
     @Test
-    public void testCalculateDurationOnTheLine() {
-        double actual = RouteCalculator.calculateDuration(routeOnTheLine);
-        double expected = 5.0;
+    public void testGetRouteOnTheLine() {
+        List<Station> actual = routeCalculator.getShortestRoute(
+                stationIndex.getStation("11"),
+                stationIndex.getStation("13"));
+        List<Station> expected = routeOnTheLine;
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void testGetRouteWithOneConnection() {
+        List<Station> actual = routeCalculator.getShortestRoute(
+                stationIndex.getStation("11"),
+                stationIndex.getStation("23"));
+        List<Station> expected = routeWithOneConnection;
         assertEquals(expected, actual);
     }
 
     @Test
-    public void testCalculateDurationWithOneConnection() {
-        double actual = RouteCalculator.calculateDuration(routeWithOneConnection);
-        double expected = 8.5;
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testCalculateDurationWithOTwoConnection() {
-        double actual = RouteCalculator.calculateDuration(routeWithTwoConnections);
-        double expected = 14.5;
+    public void testGetRouteWithTwoConnection() {
+        List<Station> actual = routeCalculator.getShortestRoute(
+                stationIndex.getStation("11"),
+                stationIndex.getStation("32"));
+        List<Station> expected = routeWithTwoConnections;
         assertEquals(expected, actual);
     }
 
