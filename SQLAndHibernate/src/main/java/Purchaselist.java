@@ -7,6 +7,9 @@ import java.util.Date;
 @Embeddable
 public class Purchaselist {
 
+    @EmbeddedId
+    private KeyPL keyPL;
+
     @Column(name = "student_name", insertable = false, updatable = false)
     private String studentName;
 
@@ -17,6 +20,14 @@ public class Purchaselist {
 
     @Column(name = "subscription_date")
     private Date subscriptionDate;
+
+    public KeyPL getKeyPL() {
+        return keyPL;
+    }
+
+    public void setKeyPL(KeyPL keyPL) {
+        this.keyPL = keyPL;
+    }
 
     public String getStudentName() {
         return studentName;
