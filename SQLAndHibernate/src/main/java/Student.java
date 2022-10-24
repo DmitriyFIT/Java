@@ -1,6 +1,5 @@
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "Students")
@@ -47,5 +46,10 @@ public class Student {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    @Override
+    public String toString() {
+        return this.name + " " + this.age + " " + this.registrationDate + "\n";
     }
 }

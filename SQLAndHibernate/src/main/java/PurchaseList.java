@@ -1,11 +1,9 @@
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Date;
 
-@Embeddable
-public class Purchaselist {
+@Entity
+@Table(name = "purchaselist")
+public class PurchaseList {
 
     @EmbeddedId
     private KeyPL keyPL;

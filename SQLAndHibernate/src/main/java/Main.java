@@ -6,8 +6,6 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
@@ -23,8 +21,8 @@ public class Main {
         System.out.println(subscription.getCourse().getId() + " - " + subscription.getCourse().getName()
                             + " - " + subscription.getCourse().getStudents());
 
-        Purchaselist purchaselist = session.get(Purchaselist.class, new KeyPL("Шведов Юрий", "Figma"));
-        System.out.println(purchaselist.getPrice());
+        PurchaseList purchaselist = session.get(PurchaseList.class, new KeyPL("Шведов Юрий", "Figma"));
+        System.out.println(purchaselist.getPrice() + " - " + purchaselist.getStudentName());
 
         transaction.commit();
         sessionFactory.close();
