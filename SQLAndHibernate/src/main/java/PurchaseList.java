@@ -19,6 +19,32 @@ public class PurchaseList {
     @Column(name = "subscription_date")
     private Date subscriptionDate;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @MapsId("studentId")
+    @JoinColumn(name = "student_id", insertable = false, updatable = false, nullable = false)
+    private Student student;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @MapsId("course_id")
+    @JoinColumn(name = "course_id", insertable = false, updatable = false,nullable = false)
+    private  Course course;
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
     public KeyPL getKeyPL() {
         return keyPL;
     }
