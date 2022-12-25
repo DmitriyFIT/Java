@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import main.model.Book;
 import main.model.BookRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
