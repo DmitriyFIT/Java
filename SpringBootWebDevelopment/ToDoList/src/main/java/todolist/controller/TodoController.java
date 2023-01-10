@@ -7,15 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import todolist.model.Task;
 import todolist.model.TodoRepo;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 public class TodoController {
@@ -34,12 +30,19 @@ public class TodoController {
     }
 
     @RequestMapping(value = "/tasks/{id}", method = RequestMethod.GET)
-    public Optional<Task> findById(@PathVariable int id) {
-        return todoRepo.findById(id);
+    public ResponseEntity<Object> findById(@PathVariable int id) {
+        if (!todoRepo.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        else {
+            Optional<Task> optionalTask = todoRepo.findById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        }
+        //return todoRepo.findById(id);
     }
 
-    @PostMapping
-    public Task save(@RequestBody Task task) {
+    @PostMapping("/tasks")
+    public ResponseEntity<Object> save(@RequestBody Task task) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         task.setCreationTime(String.valueOf(LocalDateTime.now().format(formatter)));
 
@@ -50,19 +53,41 @@ public class TodoController {
         else {
             task.setDone(false);
         }
-        return todoRepo.save(task);
+        todoRepo.save(task);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
-    @PatchMapping(value = "/tasks/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody Task update(@PathVariable("id") @RequestBody final int id,
-                                     @RequestBody final Task task) {
-        return todoRepo.save(task);
+    @RequestMapping(value = "/tasks/{id}", method = RequestMethod.PATCH)
+    public ResponseEntity<Object> update (@PathVariable Integer id, @RequestBody Task task) {
+        if (!todoRepo.existsById(id)) {
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        else {
+            Optional<Task> optionalTask = todoRepo.findById(id);
+            Task task1 = optionalTask.get();
+            task.setCreationTime(task1.getCreationTime());
+            if (task.getDescription() == null) {
+                task.setDescription(task1.getDescription());
+            }
+            if (task.getTitle() == null) {
+                task.setTitle(task1.getTitle());
+            }
+            if (task.isDone() == task1.isDone()) {
+                task.setDone(task1.isDone());
+            }
+
+            todoRepo.save(task);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @DeleteMapping(value = "/tasks/{id}")
-    public void delete(@PathVariable int id) {
+    public ResponseEntity<Object> delete(@PathVariable int id) {
+        if (!todoRepo.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
         todoRepo.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @DeleteMapping("/tasks")
