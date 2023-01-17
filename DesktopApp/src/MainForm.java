@@ -53,7 +53,12 @@ public class MainForm {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                checkFillTextsFields();
+                if (button1.getText() == "Collapse") {
+                    checkFillTextsFieldsCollapse();
+                }
+                else {
+                    checkFillTextsFieldsExpand();
+                }
             }
         });
     }
@@ -72,9 +77,8 @@ public class MainForm {
         }
     }
 
-    private void checkFillTextsFields() {
-        String[] textFio = new String[0];
-        if (button1.getText() == "Collapse") {
+    private void checkFillTextsFieldsCollapse() {
+
             if (textFieldSurname.getText().isEmpty() || textFieldName.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(
                         mainPanel,
@@ -82,12 +86,13 @@ public class MainForm {
                         "Alert ERROR!!!",
                         JOptionPane.PLAIN_MESSAGE
                 );
-            }
-            else {
+            } else {
                 pushButtonCollapse();
             }
-        }
-        if (button1.getText() == "Expand") {
+    }
+
+    private void checkFillTextsFieldsExpand() {
+        String[] textFio = new String[0];
             textFio = textFieldFio.getText().split("\\s");
             if (textFio.length < 2 || textFio.length > 3) {
                 JOptionPane.showMessageDialog(
@@ -100,13 +105,17 @@ public class MainForm {
             else {
                 pushButtonExpand(textFio);
             }
-        }
     }
 
     private void pushButtonCollapse() {
-        String total = textFieldSurname.getText().concat(" ").concat(textFieldName.getText()).concat(" ");
+
+        String total;
+        total = textFieldSurname.getText() + " " + textFieldName.getText();
+
+        if (!textFieldSecondName.getText().isEmpty()) {
+            total += " " + textFieldSecondName.getText();
+        }
         textFieldFio.setText(total);
-       // System.out.println(total);
         expandPanel.setVisible(true);
         collapsePanel.setVisible(false);
         button1.setText("Expand");
