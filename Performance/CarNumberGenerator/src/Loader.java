@@ -1,41 +1,41 @@
-import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.Future;
 
 public class Loader {
+    public static final int COUNT_PROCESSORS = Runtime.getRuntime().availableProcessors();
+    public static final int REGIONS = 199;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws FileNotFoundException {
         long start = System.currentTimeMillis();
 
-        FileOutputStream writer = new FileOutputStream("res/numbers.txt");
+        int fromRegion = 1;
+        int step = REGIONS / COUNT_PROCESSORS;
+        int toRegion = step;
 
-        char letters[] = {'У', 'К', 'Е', 'Н', 'Х', 'В', 'А', 'Р', 'О', 'С', 'М', 'Т'};
-        for (int number = 1; number < 1000; number++) {
-            int regionCode = 199;
-            for (char firstLetter : letters) {
-                for (char secondLetter : letters) {
-                    for (char thirdLetter : letters) {
-                        String carNumber = firstLetter + padNumber(number, 3) +
-                            secondLetter + thirdLetter + padNumber(regionCode, 2);
-                        writer.write(carNumber.getBytes());
-                        writer.write('\n');
-                    }
-                }
+        ForkJoinPool pool = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
+        Set<Future<?>> poolSet = new HashSet<>();
+
+        for (int i = 1; i <= COUNT_PROCESSORS; i++) {
+            if (i == COUNT_PROCESSORS) {
+                poolSet.add(pool.submit(new NumberGeneration(i, fromRegion, REGIONS)));
             }
+            poolSet.add(pool.submit(new NumberGeneration(i, fromRegion, toRegion)));
+            fromRegion = toRegion;
+            toRegion += step;
         }
 
-        writer.flush();
-        writer.close();
+        poolSet.forEach(ps -> {
+            try {
+                ps.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        });
 
         System.out.println((System.currentTimeMillis() - start) + " ms");
-    }
-
-    private static String padNumber(int number, int numberLength) {
-        String numberStr = Integer.toString(number);
-        int padSize = numberLength - numberStr.length();
-
-        for (int i = 0; i < padSize; i++) {
-            numberStr = '0' + numberStr;
-        }
-
-        return numberStr;
     }
 }
